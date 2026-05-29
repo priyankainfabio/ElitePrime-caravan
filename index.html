@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elite Prime Cars</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --font-body:'Montserrat', sans-serif;
+  --font-display:'Playfair Display', serif;
+  --gold:#d4a24c;
+  --gold-light:#f5c84f;
+  --dark:#050505;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{ background:#050505; color:white; font-family:var(--font-body); overflow-x:hidden; }
+body::before{
+  content:""; position:fixed; inset:0;
+  background:url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity:.08; pointer-events:none; z-index:999;
+}
+h1,h2,h3,.chapter-num,.benefit-num{ font-family:var(--font-display); }
+p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
+.chapter-copy h2,.final h2,.lp-head h2,.benefits-left h2,.final-content h2{ letter-spacing:-.035em; }
+.chapter-label,.benefit-label,.lp-badge,.final-content span{ font-family:var(--font-body); }
+
+/* NAVBAR */
+.nav{
+  position:fixed; top:18px; left:50%; transform:translateX(-50%);
+  width:min(1120px,88vw); z-index:100; padding:12px 18px;
+  border:1px solid rgba(255,255,255,.12); border-radius:18px;
+  background:rgba(12,12,12,.72); backdrop-filter:blur(18px);
+  display:flex; align-items:center; justify-content:space-between;
+  transition:transform .45s ease,opacity .45s ease,top .45s ease;
+}
+.nav.nav-hidden{ transform:translate(-50%, -135%); opacity:0; pointer-events:none; }
+.logo{ width:62px; }
+.book-btn{
+  background:#f5c84f; color:#050505; padding:12px 22px; border-radius:10px;
+  font-size:11px; font-weight:900; letter-spacing:.16em; text-transform:uppercase;
+  text-decoration:none;
+}
+
+/* HERO */
+.hero{ height:100vh; position:relative; overflow:hidden; background:#000; }
+.hero video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.hero::after{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(circle at center,rgba(245,200,79,.08),transparent 42%),
+  linear-gradient(to bottom,rgba(0,0,0,.1),rgba(0,0,0,.2),#050505 96%);
+}
+
+/* CHAPTERS */
+.chapters{ background:#050505; }
+.chapter{
+  height:100vh; position:sticky; top:0;
+  display:grid; grid-template-columns:1.05fr .95fr;
+  overflow:hidden; border-top:1px solid rgba(255,255,255,.08); background:#050505;
+}
+.chapter:nth-child(even){ grid-template-columns:.95fr 1.05fr; }
+.chapter:nth-child(even) .chapter-img{ order:2; }
+.chapter-img{ position:relative; overflow:hidden; }
+.chapter-img img{ width:100%; height:100%; object-fit:cover; transform:scale(1.08); transition:transform 1.4s ease; }
+.chapter:hover .chapter-img img{ transform:scale(1); }
+.chapter-img::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(to right,rgba(0,0,0,.12),#050505 100%);
+}
+.chapter:nth-child(even) .chapter-img::after{ background:linear-gradient(to left,rgba(0,0,0,.12),#050505 100%); }
+.chapter-copy{
+  padding:8vw; display:flex; flex-direction:column; justify-content:center;
+  background:radial-gradient(circle at 25% 45%,rgba(245,200,79,.12),transparent 38%),#050505;
+}
+.chapter-num{ font-family:var(--font-display); font-size:140px; line-height:.75; color:rgba(245,200,79,.14); font-weight:800; }
+.chapter-label{ margin-top:20px; color:#f5c84f; font-size:11px; font-weight:900; letter-spacing:.24em; text-transform:uppercase; }
+.chapter-copy h2{ margin-top:28px; font-family:var(--font-display); font-size:clamp(48px,6vw,94px); line-height:.92; font-weight:800; max-width:620px; }
+.chapter-copy p{ max-width:520px; margin-top:26px; color:rgba(255,255,255,.66); font-size:15px; line-height:1.9; }
+.chapter-img video{ width:100%; height:100%; object-fit:cover; transform:scale(1.08); transition:transform 1.4s ease; }
+.chapter:hover .chapter-img video{ transform:scale(1); }
+
+/* LAVISH PROCESS */
+.lavish-process{
+  position:relative; min-height:780px; padding:90px 5vw 80px;
+  background:#f5f5f3; color:#111; overflow:hidden;
+}
+.lp-head{ text-align:center; max-width:980px; margin:0 auto 50px; }
+.lp-badge{ display:inline-flex; padding:10px 24px; border:1px solid #c79625; border-radius:999px; color:#c79625; font-size:11px; font-weight:900; letter-spacing:.25em; text-transform:uppercase; }
+.lp-head h2{ margin-top:24px; font-family:var(--font-display); font-size:clamp(42px,5vw,72px); line-height:1; }
+.lp-head h2 span{ color:#d2a12d; }
+.lp-head p{ margin-top:18px; color:#555; font-size:16px; line-height:1.7; }
+.lp-flow{ position:relative; max-width:1180px; height:340px; margin:0 auto; }
+.lp-line{ position:absolute; top:65px; left:0; width:100%; height:180px; overflow:visible; }
+.lp-line path{ fill:none; stroke:#9fb8d4; stroke-width:5; stroke-dasharray:1 24; stroke-linecap:round; animation:dashMove 6s linear infinite; }
+@keyframes dashMove{ to{ stroke-dashoffset:-160; } }
+.lp-step{ position:absolute; width:280px; text-align:center; transition:.45s ease; }
+.lp-step:hover{ transform:translateY(-10px); }
+.step-one{ left:0; top:0; }
+.step-two{ left:50%; top:0; transform:translateX(-50%); }
+.step-two:hover{ transform:translateX(-50%) translateY(-10px); }
+.step-three{ right:0; top:0; }
+.lp-count{ position:absolute; top:-8px; left:78px; width:26px; height:26px; border-radius:50%; background:#4b4b4b; color:white; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px; z-index:3; }
+.lp-circle{ width:120px; height:120px; margin:0 auto 22px; border-radius:50%; background:#e8eef6; display:flex; align-items:center; justify-content:center; font-size:40px; color:#111; box-shadow:0 20px 60px rgba(0,0,0,.08); transition:.45s ease; }
+.lp-step:hover .lp-circle{ background:#d4a24c; color:white; box-shadow:0 24px 70px rgba(212,162,76,.28); }
+.lp-step h3{ font-family:var(--font-display); font-size:24px; margin-bottom:14px; line-height:1.15; }
+.lp-step p{ color:#333; font-size:14px; line-height:1.7; }
+.process-cursor{ position:absolute; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle,rgba(212,162,76,.18),transparent 70%); pointer-events:none; transform:translate(-50%,-50%); opacity:.7; filter:blur(8px); }
+.lp-btn-wrap{ position:absolute; left:50%; bottom:30px; transform:translateX(-50%); }
+.lp-btn{ display:inline-flex; align-items:center; justify-content:center; padding:18px 42px; background:#d4a24c; color:#111; border-radius:4px; font-size:12px; font-weight:900; letter-spacing:.18em; text-transform:uppercase; box-shadow:0 0 25px rgba(212,162,76,.28),0 12px 40px rgba(0,0,0,.12); transition:.35s ease; text-decoration:none; }
+.lp-btn:hover{ transform:translateY(-4px); box-shadow:0 0 35px rgba(212,162,76,.4),0 18px 50px rgba(0,0,0,.18); }
+
+/* BENEFITS */
+.benefits-section{ position:relative; min-height:820px; padding:70px 5vw 45px; background:radial-gradient(circle at 0% 0%,rgba(212,162,76,.12),transparent 28%),radial-gradient(circle at 100% 100%,rgba(212,162,76,.12),transparent 28%),#030303; color:#fff; overflow:hidden; }
+.benefits-section::before{ content:""; position:absolute; inset:0; background:repeating-linear-gradient(115deg,rgba(212,162,76,.04) 0px,rgba(212,162,76,.04) 1px,transparent 1px,transparent 12px); opacity:.22; pointer-events:none; }
+.benefits-inner{ position:relative; z-index:2; max-width:1500px; margin:0 auto; display:grid; grid-template-columns:.78fr 1.22fr; gap:26px; align-items:center; }
+.benefits-left{ padding-right:10px; }
+.benefit-label{ color:#d4a24c; font-size:11px; font-weight:900; letter-spacing:.24em; text-transform:uppercase; margin-bottom:18px; }
+.benefits-left h2{ font-family:var(--font-display); font-size:clamp(46px,5vw,82px); line-height:.95; letter-spacing:-.04em; font-weight:800; }
+.benefits-left h2 span{ display:inline-block; color:#d4a24c; }
+.benefit-intro{ max-width:500px; margin-top:18px; color:rgba(255,255,255,.72); font-size:15px; line-height:1.7; }
+.benefit-list{ margin-top:22px; display:grid; gap:10px; }
+.benefit-item{ position:relative; min-height:98px; display:grid; grid-template-columns:90px 1fr 54px; align-items:center; gap:18px; padding:14px 18px; border:1px solid rgba(212,162,76,.16); border-radius:14px; background:rgba(255,255,255,.025); backdrop-filter:blur(10px); cursor:pointer; overflow:hidden; transition:.45s ease; }
+.benefit-item::before{ content:""; position:absolute; left:0; top:0; width:4px; height:100%; background:#d4a24c; transform:scaleY(0); transform-origin:bottom; transition:.45s ease; box-shadow:0 0 22px rgba(212,162,76,.6); }
+.benefit-item:hover,.benefit-item.active{ border-color:rgba(212,162,76,.75); background:linear-gradient(90deg,rgba(212,162,76,.12),rgba(255,255,255,.03)); transform:translateX(8px); box-shadow:0 25px 80px rgba(0,0,0,.38); }
+.benefit-item:hover::before,.benefit-item.active::before{ transform:scaleY(1); }
+.benefit-num{ font-family:var(--font-display); font-size:42px; line-height:1; color:#d4a24c; }
+.benefit-copy h3{ color:#d4a24c; font-size:13px; letter-spacing:.17em; text-transform:uppercase; margin-bottom:8px; }
+.benefit-copy p{ color:rgba(255,255,255,.76); line-height:1.55; font-size:13px; }
+.benefit-arrow{ width:42px; height:42px; border:1px solid rgba(212,162,76,.35); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#d4a24c; font-size:22px; transition:.35s ease; }
+.benefit-item:hover .benefit-arrow,.benefit-item.active .benefit-arrow{ background:#d4a24c; color:#030303; transform:rotate(-25deg); }
+.benefits-right{ position:relative; }
+.benefit-image-wrap{ position:relative; height:560px; border:1px solid rgba(212,162,76,.45); border-radius:18px; overflow:hidden; background:#111; box-shadow:0 40px 130px rgba(0,0,0,.55),0 0 60px rgba(212,162,76,.12); }
+.benefit-image-wrap::before{ content:""; position:absolute; inset:0; z-index:2; background:linear-gradient(to top,rgba(0,0,0,.55),transparent 45%),radial-gradient(circle at 50% 45%,rgba(212,162,76,.18),transparent 38%); pointer-events:none; }
+.benefit-image-wrap img{ width:100%; height:100%; object-fit:cover; transform:scale(1.08); transition:opacity .45s ease,transform 1.1s ease; }
+.benefit-image-wrap:hover img{ transform:scale(1); }
+.elite-badge{ position:absolute; right:26px; top:0; z-index:4; width:130px; min-height:160px; padding:18px 14px; background:rgba(0,0,0,.72); backdrop-filter:blur(12px); border:1px solid rgba(212,162,76,.22); border-top:none; border-radius:0 0 18px 18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; }
+.elite-badge img{ width:60px; height:auto; object-fit:contain; }
+.elite-badge span{ color:#fff; text-align:center; text-transform:uppercase; letter-spacing:.16em; font-size:10px; line-height:1.6; }
+.benefit-strip{ position:relative; z-index:3; max-width:1380px; margin:18px auto 0; padding-top:22px; border-top:1px solid rgba(212,162,76,.25); display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.benefit-strip > div{ display:flex; align-items:center; gap:14px; border-right:1px solid rgba(212,162,76,.25); padding-right:16px; }
+.benefit-strip > div:last-child{ border-right:none; }
+.benefit-strip .bs-icon{ color:#d4a24c; font-size:26px; }
+.benefit-strip b{ display:block; font-size:11px; letter-spacing:.15em; text-transform:uppercase; }
+.benefit-strip small{ display:block; margin-top:3px; color:rgba(255,255,255,.58); font-size:11px; }
+.benefit-cursor{ position:absolute; width:260px; height:260px; border-radius:50%; pointer-events:none; z-index:1; background:radial-gradient(circle,rgba(212,162,76,.18),transparent 68%); transform:translate(-50%,-50%); filter:blur(10px); opacity:.75; }
+.benefits-section.reveal-section .benefits-left{ animation:benefitFadeUp .9s ease both; }
+.benefits-section.reveal-section .benefits-right{ animation:benefitFadeUp 1.1s ease both; }
+@keyframes benefitFadeUp{ from{opacity:0;transform:translateY(50px)} to{opacity:1;transform:translateY(0)} }
+
+/* ===================== CLIENT REVIEWS ===================== */
+.reviews-section{
+  position:relative;
+  padding:100px 0 90px;
+  background:
+    radial-gradient(ellipse at 80% 0%,rgba(212,162,76,.10),transparent 38%),
+    radial-gradient(ellipse at 20% 100%,rgba(212,162,76,.10),transparent 38%),
+    #080808;
+  overflow:hidden;
+}
+.reviews-section::before{
+  content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(-45deg,rgba(212,162,76,.025) 0px,rgba(212,162,76,.025) 1px,transparent 1px,transparent 18px);
+  pointer-events:none;
+}
+.reviews-head{
+  text-align:center; max-width:820px; margin:0 auto 60px;
+  position:relative; z-index:2; padding:0 5vw;
+}
+.reviews-badge{
+  display:inline-flex; align-items:center; gap:8px; padding:9px 22px;
+  border:1px solid rgba(212,162,76,.45); border-radius:999px;
+  color:#d4a24c; font-size:11px; font-weight:900; letter-spacing:.26em; text-transform:uppercase;
+  margin-bottom:24px;
+}
+.reviews-head h2{ font-family:var(--font-display); font-size:clamp(42px,5.5vw,80px); line-height:.95; letter-spacing:-.035em; font-weight:800; }
+.reviews-head h2 em{ font-style:normal; color:#d4a24c; }
+.reviews-head p{ margin-top:18px; color:rgba(255,255,255,.58); font-size:15px; line-height:1.8; }
+.reviews-overall{ display:flex; align-items:center; justify-content:center; gap:20px; margin-top:30px; flex-wrap:wrap; }
+.reviews-score{ font-family:var(--font-display); font-size:72px; font-weight:800; color:#d4a24c; line-height:1; }
+.reviews-score-right{ display:flex; flex-direction:column; gap:6px; }
+.stars-row{ display:flex; gap:4px; }
+.star{ font-size:20px; color:#d4a24c; }
+.reviews-count{ color:rgba(255,255,255,.52); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.reviews-platform{ display:flex; align-items:center; gap:8px; padding:10px 20px; border:1px solid rgba(212,162,76,.25); border-radius:10px; background:rgba(255,255,255,.03); }
+.reviews-platform span{ font-size:11px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.65); }
+.reviews-platform .g-icon{ font-size:18px; font-weight:900; color:#d4a24c; }
+
+/* TRACK */
+.reviews-track-wrap{ position:relative; overflow:hidden; z-index:2; padding:8px 0 4px; }
+.reviews-track-wrap::before,.reviews-track-wrap::after{
+  content:""; position:absolute; top:0; width:160px; height:100%; z-index:3; pointer-events:none;
+}
+.reviews-track-wrap::before{ left:0; background:linear-gradient(to right,#080808,transparent); }
+.reviews-track-wrap::after{ right:0; background:linear-gradient(to left,#080808,transparent); }
+.reviews-track{
+  display:flex; gap:24px; width:max-content;
+  animation:reviewsScroll 42s linear infinite; padding:8px 24px 28px;
+}
+.reviews-track:hover{ animation-play-state:paused; }
+@keyframes reviewsScroll{ 0%{ transform:translateX(0); } 100%{ transform:translateX(-50%); } }
+
+/* CARD */
+.review-card{
+  width:360px; flex-shrink:0; background:rgba(255,255,255,.035);
+  border:1px solid rgba(212,162,76,.18); border-radius:20px; padding:28px 26px 24px;
+  position:relative; overflow:hidden; transition:.4s ease; cursor:default;
+}
+.review-card::before{
+  content:""; position:absolute; top:0; left:0; width:100%; height:3px;
+  background:linear-gradient(90deg,transparent,#d4a24c,transparent);
+  transform:scaleX(0); transition:.45s ease;
+}
+.review-card:hover{ border-color:rgba(212,162,76,.55); background:rgba(212,162,76,.06); transform:translateY(-6px); box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 40px rgba(212,162,76,.12); }
+.review-card:hover::before{ transform:scaleX(1); }
+.review-quote{ font-family:var(--font-display); font-size:52px; line-height:.6; color:rgba(212,162,76,.35); margin-bottom:8px; display:block; }
+.review-text{ color:rgba(255,255,255,.80); font-size:14px; line-height:1.8; margin-bottom:20px; min-height:80px; }
+.review-stars{ display:flex; gap:3px; margin-bottom:18px; }
+.review-stars .star{ font-size:13px; }
+.review-footer{ display:flex; align-items:center; gap:14px; border-top:1px solid rgba(255,255,255,.08); padding-top:16px; }
+.review-avatar{
+  width:44px; height:44px; border-radius:50%; border:2px solid rgba(212,162,76,.4);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-size:18px; font-weight:800; color:#fff;
+  flex-shrink:0; overflow:hidden;
+}
+.review-name{ font-size:13px; font-weight:900; letter-spacing:.05em; }
+.review-trip{ font-size:11px; color:#d4a24c; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-top:3px; }
+
+/* FINAL CTA */
+.final-cta{
+  min-height:78vh; position:relative; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:120px 5vw; overflow:hidden;
+  background:linear-gradient(to bottom,rgba(0,0,0,.15),rgba(0,0,0,.55)),url("pic.jpg") center/cover no-repeat;
+}
+.final-overlay{ position:absolute; inset:0; background:radial-gradient(circle at center,rgba(212,162,76,.22),transparent 42%),linear-gradient(to top,#050505 0%,transparent 35%); }
+.final-content{ position:relative; z-index:2; max-width:1050px; }
+.final-content > span{ color:#d4a24c; text-transform:uppercase; font-size:12px; font-weight:900; letter-spacing:.26em; }
+.final-content h2{ margin-top:22px; font-family:var(--font-display); font-size:clamp(54px,7vw,118px); line-height:.92; font-weight:800; }
+.final-content p{ max-width:680px; margin:24px auto 0; color:rgba(255,255,255,.76); font-size:16px; line-height:1.9; }
+.final-btn{ margin-top:34px; display:inline-flex; padding:18px 46px; background:#d4a24c; color:#050505; font-size:12px; font-weight:900; letter-spacing:.18em; text-transform:uppercase; box-shadow:0 0 35px rgba(212,162,76,.35); transition:.35s ease; text-decoration:none; }
+.final-btn:hover{ transform:translateY(-5px); box-shadow:0 0 55px rgba(212,162,76,.55); }
+
+/* ===================== FOOTER ===================== */
+.ep-footer{ background:#0a0a0a; color:#fff; border-top:1px solid rgba(212,162,76,.18); }
+
+/* CTA BAR */
+.ep-cta-bar{
+  padding:52px 8vw; display:flex; align-items:center; justify-content:space-between; gap:34px; flex-wrap:wrap;
+  border-bottom:1px solid rgba(212,162,76,.15);
+  background:radial-gradient(ellipse at 8% 50%,rgba(212,162,76,.12),transparent 38%),#0d0d0d;
+}
+.ep-cta-left h2{ font-family:var(--font-display); font-size:clamp(28px,3vw,48px); line-height:1.05; font-weight:800; letter-spacing:-.03em; margin-bottom:10px; }
+.ep-cta-left p{ color:rgba(255,255,255,.55); font-size:14px; line-height:1.7; max-width:560px; }
+.ep-cta-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.ep-whatsapp-btn,.ep-call-btn{
+  height:54px; padding:0 32px; display:inline-flex; align-items:center; justify-content:center;
+  text-decoration:none; text-transform:uppercase; font-size:11px; font-weight:900; letter-spacing:.16em;
+  border-radius:6px; transition:.35s ease; white-space:nowrap;
+}
+.ep-whatsapp-btn{ background:#d4a24c; color:#050505; box-shadow:0 0 30px rgba(212,162,76,.22); }
+.ep-call-btn{ border:1px solid rgba(212,162,76,.45); color:#d4a24c; background:rgba(255,255,255,.02); }
+.ep-whatsapp-btn:hover,.ep-call-btn:hover{ transform:translateY(-4px); }
+
+/* MAIN COLUMNS */
+.ep-footer-main{
+  padding:72px 8vw 60px; display:grid; grid-template-columns:1.6fr 1fr 1fr .85fr; gap:60px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.ep-logo-wrap{ display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+.ep-logo-wrap img{ width:70px; height:auto; }
+.ep-logo-wrap h3{ font-family:var(--font-display); font-size:28px; line-height:.95; font-weight:800; letter-spacing:-.02em; }
+.ep-logo-wrap span{ display:block; margin-top:6px; color:#d4a24c; font-size:10px; font-weight:900; letter-spacing:.18em; text-transform:uppercase; }
+.ep-brand p{ max-width:380px; color:rgba(255,255,255,.55); font-size:13.5px; line-height:1.9; margin-bottom:26px; }
+.ep-contact-list{ margin-bottom:24px; }
+.ep-contact-list div{ display:flex; align-items:center; gap:10px; margin-bottom:10px; color:rgba(255,255,255,.68); font-size:13px; font-weight:600; letter-spacing:.04em; }
+.ep-contact-list div .ci{ color:#d4a24c; font-size:15px; }
+.ep-socials{ display:flex; gap:9px; }
+.ep-socials a{ width:42px; height:42px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(212,162,76,.28); border-radius:8px; color:#d4a24c; text-decoration:none; font-size:11px; font-weight:900; letter-spacing:.08em; background:rgba(255,255,255,.025); transition:.35s ease; }
+.ep-socials a:hover{ background:#d4a24c; color:#050505; transform:translateY(-3px); }
+.ep-footer-main > div h4{ color:#d4a24c; margin-bottom:22px; letter-spacing:.20em; text-transform:uppercase; font-size:11px; font-weight:900; padding-bottom:12px; border-bottom:1px solid rgba(212,162,76,.18); }
+.ep-footer-main > div a{ display:flex; align-items:center; gap:8px; text-decoration:none; color:rgba(255,255,255,.52); margin-bottom:12px; font-size:13.5px; line-height:1.4; transition:.3s ease; letter-spacing:.01em; }
+.ep-footer-main > div a::before{ content:"›"; color:#d4a24c; font-size:16px; opacity:0; transform:translateX(-6px); transition:.3s ease; }
+.ep-footer-main > div a:hover{ color:#d4a24c; transform:translateX(6px); }
+.ep-footer-main > div a:hover::before{ opacity:1; transform:translateX(0); }
+
+/* BOTTOM BAR */
+.ep-footer-bottom{ padding:22px 8vw 28px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+.ep-footer-bottom p{ color:rgba(255,255,255,.38); font-size:12.5px; }
+.footer-right{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.footer-right a{ color:rgba(255,255,255,.40); text-decoration:none; font-size:12.5px; transition:.3s ease; }
+.footer-right a:hover{ color:#d4a24c; }
+.site-credit{ display:flex; }
+.site-credit-inner{ display:inline-flex; align-items:center; gap:8px; padding:7px 12px; border:1px solid rgba(255,255,255,.14); border-radius:8px; background:rgba(255,255,255,.04); transition:.3s ease; }
+.site-credit-inner:hover{ background:rgba(255,255,255,.09); }
+.site-credit-inner a{ display:flex; align-items:center; opacity:.85; }
+.site-credit-inner a:hover{ opacity:1; }
+.site-credit-inner img{ height:11px; width:auto; display:block; }
+.site-credit-inner .sc-divider{ width:1px; height:12px; background:rgba(255,255,255,.25); }
+
+/* MOBILE */
+@media(max-width:900px){
+  .nav{ width:92vw; top:12px; }
+  .logo{ width:52px; }
+  .book-btn{ padding:10px 16px; font-size:10px; }
+  .chapter,.chapter:nth-child(even){ grid-template-columns:1fr; }
+  .chapter-img,.chapter:nth-child(even) .chapter-img{ order:1; min-height:42vh; }
+  .chapter-copy{ min-height:58vh; padding:50px 6vw; }
+  .lavish-process{ min-height:auto; padding:70px 6vw; }
+  .lp-flow{ height:auto; display:grid; gap:40px; }
+  .lp-line{ display:none; }
+  .lp-step,.step-one,.step-two,.step-three{ position:relative; inset:auto; transform:none; margin:auto; }
+  .step-two:hover{ transform:translateY(-10px); }
+  .benefits-inner{ grid-template-columns:1fr; }
+  .benefit-image-wrap{ height:460px; }
+  .benefit-strip{ grid-template-columns:1fr 1fr; }
+  .review-card{ width:300px; }
+  .ep-cta-bar{ flex-direction:column; align-items:flex-start; padding:42px 6vw; }
+  .ep-footer-main{ grid-template-columns:1fr; gap:38px; padding:52px 6vw; }
+  .ep-footer-bottom{ flex-direction:column; align-items:flex-start; padding:22px 6vw 28px; }
+}
+@media(max-width:700px){
+  .benefits-section{ min-height:auto; padding:60px 6vw; }
+  .benefit-item{ grid-template-columns:70px 1fr; }
+  .benefit-arrow{ display:none; }
+  .benefit-num{ font-size:36px; }
+  .benefit-image-wrap{ height:360px; }
+  .benefit-strip{ grid-template-columns:1fr; }
+  .benefit-strip > div{ border-right:none; border-bottom:1px solid rgba(212,162,76,.18); padding-bottom:16px; }
+  .review-card{ width:280px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <img src="logo.png" class="logo" alt="Elite Prime Cars">
+  <a href="#" class="book-btn">Book Journey</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <video autoplay muted loop playsinline preload="auto">
+    <source src="hero.mp4" type="video/mp4">
+  </video>
+</section>
+
+<!-- CHAPTERS -->
+<section class="chapters">
+
+  <div class="chapter">
+    <div class="chapter-img">
+      <video autoplay muted loop playsinline preload="auto">
+        <source src="day.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="chapter-copy">
+      <div class="chapter-num">01</div>
+      <div class="chapter-label">Chapter One</div>
+      <h2>The Escape</h2>
+      <p>Leave the predictable behind. Step into a moving suite crafted for silence, comfort and cinematic road freedom.</p>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-img">
+      <img src="caravan.png" alt="">
+    </div>
+    <div class="chapter-copy">
+      <div class="chapter-num">02</div>
+      <div class="chapter-label">Chapter Two</div>
+      <h2>The Moving Suite</h2>
+      <p>Warm lighting, private interiors and premium comfort designed for couples, families and luxury travellers.</p>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-img">
+      <img src="ch3.jpg" alt="">
+    </div>
+    <div class="chapter-copy">
+      <div class="chapter-num">03</div>
+      <div class="chapter-label">Chapter Three</div>
+      <h2>The Journey</h2>
+      <p>Every route becomes an experience — built around freedom, privacy, movement and luxury storytelling.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- PROCESS -->
+<section class="lavish-process" id="process">
+  <div class="process-cursor" id="processCursor"></div>
+  <div class="lp-head">
+    <div class="lp-badge">◆ Our Process</div>
+    <h2>Seamless <span>Booking Experience</span></h2>
+    <p>Reserve your ultimate luxury experience in three simple steps.</p>
+  </div>
+  <div class="lp-flow">
+    <svg class="lp-line" viewBox="0 0 1200 260" preserveAspectRatio="none">
+      <path d="M70 120 C 260 230, 420 230, 560 120 S 900 40, 1130 135"/>
+    </svg>
+    <div class="lp-step step-one">
+      <div class="lp-count">1</div>
+      <div class="lp-circle">▣</div>
+      <h3>Choose Your Ride</h3>
+      <p>Browse our luxurious fleet and select the perfect vehicle for your occasion or business needs.</p>
+    </div>
+    <div class="lp-step step-two">
+      <div class="lp-count">2</div>
+      <div class="lp-circle">✓</div>
+      <h3>Confirm Details</h3>
+      <p>Connect with our team instantly via WhatsApp or phone to finalize dates, requirements and secure your booking.</p>
+    </div>
+    <div class="lp-step step-three">
+      <div class="lp-count">3</div>
+      <div class="lp-circle">▰</div>
+      <h3>Enjoy The Journey</h3>
+      <p>Your meticulously prepared vehicle and professional chauffeur will arrive precisely on time. Relax and enjoy.</p>
+    </div>
+  </div>
+  <div class="lp-btn-wrap">
+    <a href="#" class="lp-btn">View Fleet</a>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits-section" id="benefits">
+  <div class="benefit-cursor" id="benefitCursor"></div>
+  <div class="benefits-inner">
+    <div class="benefits-left">
+      <div class="benefit-label">◆ Why Caravan</div>
+      <h2>Luxury That <span>Moves</span> With You</h2>
+      <p class="benefit-intro">A private travel experience built around comfort, privacy and freedom.</p>
+      <div class="benefit-list">
+        <div class="benefit-item active" data-img="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1600&q=90">
+          <div class="benefit-num">01</div>
+          <div class="benefit-copy"><h3>Private Moving Suite</h3><p>Your space stays with you — no hotel lobby, no check-in rush, no shared corridors.</p></div>
+          <div class="benefit-arrow">→</div>
+        </div>
+        <div class="benefit-item" data-img="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=90">
+          <div class="benefit-num">02</div>
+          <div class="benefit-copy"><h3>Stop Where Others Can't</h3><p>Wake up beside highways, hills, lakes, farms or private event locations.</p></div>
+          <div class="benefit-arrow">→</div>
+        </div>
+        <div class="benefit-item" data-img="caravan.png">
+          <div class="benefit-num">03</div>
+          <div class="benefit-copy"><h3>Family &amp; Group Comfort</h3><p>Travel with space, privacy, luggage comfort and a calm lounge-like environment.</p></div>
+          <div class="benefit-arrow">→</div>
+        </div>
+        <div class="benefit-item" data-img="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=90">
+          <div class="benefit-num">04</div>
+          <div class="benefit-copy"><h3>Premium Road Presence</h3><p>Arrive differently with a luxury caravan experience backed by Elite Prime Cars.</p></div>
+          <div class="benefit-arrow">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="benefits-right">
+      <div class="benefit-image-wrap">
+        <img id="benefitImage" src="cinematic_caravan.gif" alt="Luxury Caravan Experience">
+        <div class="elite-badge">
+          <img src="logo.png" alt="Elite">
+          <span>Elite Caravan Collection</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="benefit-strip">
+    <div><span class="bs-icon">♛</span><div><b>5 Star Comfort</b><small>On Every Journey</small></div></div>
+    <div><span class="bs-icon">◇</span><div><b>Complete Privacy</b><small>Just For You</small></div></div>
+    <div><span class="bs-icon">⌖</span><div><b>Unlimited Freedom</b><small>Go Anywhere</small></div></div>
+    <div><span class="bs-icon">◇</span><div><b>Luxury Redefined</b><small>Only With Elite</small></div></div>
+  </div>
+</section>
+
+<!-- ===================== CLIENT REVIEWS ===================== -->
+<section class="reviews-section" id="reviews">
+  <div class="reviews-head">
+    <div class="reviews-badge">★ Client Reviews</div>
+    <h2>Words From Our<br><em>Valued Travellers</em></h2>
+    <p>Real experiences from guests who've journeyed with Elite Caravan — in their own words.</p>
+    <div class="reviews-overall">
+      <div class="reviews-score">4.9</div>
+      <div class="reviews-score-right">
+        <div class="stars-row">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="reviews-count">Based on 200+ Reviews</div>
+      </div>
+      <div class="reviews-platform">
+        <span class="g-icon">G</span>
+        <span>Google Reviews</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reviews-track-wrap">
+    <div class="reviews-track">
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">Absolutely stunning experience. The caravan was spotless, the route was magical, and the chauffeur was incredibly professional. Will definitely book again.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#d4a24c,#7a4f10)">R</div>
+          <div><div class="review-name">Rohit Malhotra</div><div class="review-trip">Pune → Mahabaleshwar</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">We celebrated our anniversary inside the caravan parked by a lake. It felt like a 5-star suite on wheels. The ambience, the privacy — everything was beyond perfect.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#b06020,#d4a24c)">P</div>
+          <div><div class="review-name">Priya &amp; Arjun Shah</div><div class="review-trip">Anniversary Escape</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">Used Elite Caravan for a corporate offsite. My entire team was blown away. Working on a laptop while cruising through the Sahyadris — surreal productivity and luxury combined.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#1a2b3c,#3a5a8a)">V</div>
+          <div><div class="review-name">Vikram Oberoi</div><div class="review-trip">Corporate Retreat</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">Travelled with my kids and parents in total comfort. Enough room, a proper lounge feel, and we stopped wherever we wanted. No hotel bookings, no stress — pure freedom.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#1a5e2a,#0d3816)">S</div>
+          <div><div class="review-name">Sneha Kulkarni</div><div class="review-trip">Family Road Trip</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">As a content creator, the cinematic backdrops this caravan gave me were unmatched. The team was flexible and the whole journey felt like a film set. 10/10 recommend.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#8a1414,#c42424)">A</div>
+          <div><div class="review-name">Aashna Mehra</div><div class="review-trip">Influencer Creator Trip</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">Booked for a destination pre-wedding shoot and the caravan stole the show. The golden hour light through those windows — absolutely dreamy. Best decision we made.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#6a2a8a,#9a4abf)">N</div>
+          <div><div class="review-name">Nisha &amp; Dev Kapoor</div><div class="review-trip">Pre-Wedding Shoot</div></div>
+        </div>
+      </div>
+
+      <!-- DUPLICATE SET for seamless loop -->
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">Absolutely stunning experience. The caravan was spotless, the route was magical, and the chauffeur was incredibly professional. Will definitely book again.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#d4a24c,#7a4f10)">R</div>
+          <div><div class="review-name">Rohit Malhotra</div><div class="review-trip">Pune → Mahabaleshwar</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">We celebrated our anniversary inside the caravan parked by a lake. It felt like a 5-star suite on wheels. The ambience, the privacy — everything was beyond perfect.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#b06020,#d4a24c)">P</div>
+          <div><div class="review-name">Priya &amp; Arjun Shah</div><div class="review-trip">Anniversary Escape</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">Used Elite Caravan for a corporate offsite. My entire team was blown away. Working on a laptop while cruising through the Sahyadris — surreal productivity and luxury combined.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#1a2b3c,#3a5a8a)">V</div>
+          <div><div class="review-name">Vikram Oberoi</div><div class="review-trip">Corporate Retreat</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">Travelled with my kids and parents in total comfort. Enough room, a proper lounge feel, and we stopped wherever we wanted. No hotel bookings, no stress — pure freedom.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#1a5e2a,#0d3816)">S</div>
+          <div><div class="review-name">Sneha Kulkarni</div><div class="review-trip">Family Road Trip</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">As a content creator, the cinematic backdrops this caravan gave me were unmatched. The team was flexible and the whole journey felt like a film set. 10/10 recommend.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#8a1414,#c42424)">A</div>
+          <div><div class="review-name">Aashna Mehra</div><div class="review-trip">Influencer Creator Trip</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">Booked for a destination pre-wedding shoot and the caravan stole the show. The golden hour light through those windows — absolutely dreamy. Best decision we made.</p>
+        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="review-footer">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#6a2a8a,#9a4abf)">N</div>
+          <div><div class="review-name">Nisha &amp; Dev Kapoor</div><div class="review-trip">Pre-Wedding Shoot</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="ep-footer">
+
+  <div class="ep-cta-bar">
+    <div class="ep-cta-left">
+      <h2>Ready to Begin Your Journey?</h2>
+      <p>Reach out on WhatsApp or call us directly to plan your perfect luxury caravan experience across India.</p>
+    </div>
+    <div class="ep-cta-actions">
+      <a href="https://wa.me/919999999999" class="ep-whatsapp-btn">WhatsApp Us</a>
+      <a href="tel:+919999999999" class="ep-call-btn">Call Now</a>
+    </div>
+  </div>
+
+  <div class="ep-footer-main">
+
+    <div class="ep-brand">
+      <div class="ep-logo-wrap">
+        <img src="logo.png" alt="Elite Caravan">
+        <div>
+          <h3>ELITE CARAVAN</h3>
+          <span>Travel Like Freedom</span>
+        </div>
+      </div>
+      <p>India's premium luxury caravan experience for cinematic road trips, family escapes, creators, corporate retreats and unforgettable journeys.</p>
+      <div class="ep-contact-list">
+        <div><span class="ci">☎</span> +91 9920053379</div>
+        <div><span class="ci">✉</span> info@eliteprimecars.com</div>
+        <div><span class="ci">📍</span> Maharashtra, India</div>
+      </div>
+      <div class="ep-socials">
+        <a href="#" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://wa.me/919920053379" aria-label="WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </a>
+        <a href="#" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h4>Experiences</h4>
+      <a href="#">Luxury Road Trips</a>
+      <a href="#">Corporate Retreats</a>
+      <a href="#">Family Escapes</a>
+      <a href="#">Influencer Travel</a>
+      <a href="#">Weekend Getaways</a>
+    </div>
+
+    <div>
+      <h4>Caravan Uses</h4>
+      <a href="#">Film Shoots</a>
+      <a href="#">Luxury Camping</a>
+      <a href="#">Office On Wheels</a>
+      <a href="#">Pet Friendly Travel</a>
+      <a href="#">Private Tourism</a>
+    </div>
+
+    <div>
+      <h4>Support</h4>
+      <a href="#">Contact</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Booking Help</a>
+    </div>
+
+  </div>
+
+  <div class="ep-footer-bottom">
+    <p>© 2026 Elite Caravan. All rights reserved.</p>
+    <div class="footer-right">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <div class="site-credit">
+        <div class="site-credit-inner">
+          <a href="https://fabulousmedia.in/" target="_blank">
+            <img src="fabulous-logo.png" alt="Fabulous Media">
+          </a>
+          <span class="sc-divider"></span>
+          <a href="https://gocommercially.com/" target="_blank">
+            <img src="gocommercially-logo.png" alt="Go Commercially">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+<script>
+const processSection = document.querySelector(".lavish-process");
+const processCursor = document.getElementById("processCursor");
+if(processSection && processCursor){
+  processSection.addEventListener("mousemove", function(e){
+    const rect = processSection.getBoundingClientRect();
+    processCursor.style.left = (e.clientX - rect.left) + "px";
+    processCursor.style.top = (e.clientY - rect.top) + "px";
+  });
+}
+
+const benefitItems = document.querySelectorAll(".benefit-item");
+const benefitImage = document.getElementById("benefitImage");
+benefitItems.forEach((item)=>{
+  item.addEventListener("mouseenter", ()=>{
+    benefitItems.forEach((el)=>el.classList.remove("active"));
+    item.classList.add("active");
+    const newImg = item.getAttribute("data-img");
+    benefitImage.style.opacity = "0";
+    setTimeout(()=>{
+      benefitImage.src = newImg;
+      benefitImage.style.opacity = "1";
+      benefitImage.style.transform = "scale(1.08)";
+    },220);
+  });
+});
+
+const benefitsSection = document.querySelector(".benefits-section");
+const benefitCursor = document.getElementById("benefitCursor");
+if(benefitsSection && benefitCursor){
+  benefitsSection.addEventListener("mousemove",(e)=>{
+    const rect = benefitsSection.getBoundingClientRect();
+    benefitCursor.style.left = (e.clientX - rect.left) + "px";
+    benefitCursor.style.top = (e.clientY - rect.top) + "px";
+  });
+}
+
+const benefitObserver = new IntersectionObserver((entries)=>{
+  entries.forEach((entry)=>{
+    if(entry.isIntersecting) entry.target.classList.add("reveal-section");
+  });
+},{threshold:.25});
+if(benefitsSection) benefitObserver.observe(benefitsSection);
+
+let lastScrollY = window.scrollY;
+const navbar = document.querySelector(".nav");
+if(navbar){
+  window.addEventListener("scroll", () => {
+    const currentScrollY = window.scrollY;
+    if(currentScrollY > lastScrollY && currentScrollY > 120){
+      navbar.classList.add("nav-hidden");
+    } else {
+      navbar.classList.remove("nav-hidden");
+    }
+    lastScrollY = Math.max(currentScrollY, 0);
+  }, { passive:true });
+}
+</script>
+</body>
+</html>
