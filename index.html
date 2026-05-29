@@ -28,12 +28,80 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
 
 /* NAVBAR */
 .nav{
-  position:fixed; top:18px; left:50%; transform:translateX(-50%);
-  width:min(1120px,88vw); z-index:100; padding:12px 18px;
-  border:1px solid rgba(255,255,255,.12); border-radius:18px;
-  background:rgba(12,12,12,.72); backdrop-filter:blur(18px);
-  display:flex; align-items:center; justify-content:space-between;
-  transition:transform .45s ease,opacity .45s ease,top .45s ease;
+  position:fixed;
+  top:22px;
+  left:50%;
+  transform:translateX(-50%);
+
+  width:92%;
+  max-width:1350px;
+
+  z-index:999;
+
+  display:flex;
+  align-items:center;
+
+  padding:14px 22px;
+
+  background:rgba(8,8,8,0.28);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+
+  border:1px solid rgba(255,215,120,0.14);
+
+  border-radius:22px;
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+
+  transition:
+    transform .45s ease,
+    background .45s ease,
+    opacity .45s ease;
+}
+  .nav::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,210,120,0.08),
+      transparent 30%,
+      transparent 70%,
+      rgba(255,210,120,0.06)
+    );
+
+  pointer-events:none;
+}
+.nav-links a{
+  color:rgba(255,255,255,0.88);
+  transition:.3s ease;
+}
+
+.nav-links a:hover{
+  color:#f5c96a;
+}
+.book-btn{
+  margin-left:auto;
+  background:#f5c84f;
+  color:#050505;
+  padding:12px 22px;
+  border-radius:10px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  text-decoration:none;
+}
+
+.book-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 0 45px rgba(245,201,106,.42);
 }
 .nav.nav-hidden{ transform:translate(-50%, -135%); opacity:0; pointer-events:none; }
 .logo{ width:62px; }
@@ -335,13 +403,13 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
 
 <nav class="nav">
   <img src="logo.png" class="logo" alt="Elite Prime Cars">
-  <a href="#" class="book-btn">Book Journey</a>
+  <a href="#footer" class="book-btn">Book Journey</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <video autoplay muted loop playsinline preload="auto">
-    <source src="hero.mp4" type="video/mp4">
+    <source src="hero1.mp4" type="video/mp4">
   </video>
 </section>
 
@@ -625,7 +693,7 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
 
 
 <!-- ===================== FOOTER ===================== -->
-<footer class="ep-footer">
+<footer class="ep-footer" id="footer">
 
   <div class="ep-cta-bar">
     <div class="ep-cta-left">
@@ -633,8 +701,8 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
       <p>Reach out on WhatsApp or call us directly to plan your perfect luxury caravan experience across India.</p>
     </div>
     <div class="ep-cta-actions">
-      <a href="https://wa.me/919999999999" class="ep-whatsapp-btn">WhatsApp Us</a>
-      <a href="tel:+919999999999" class="ep-call-btn">Call Now</a>
+      <a href="https://wa.me/919920053379" class="ep-whatsapp-btn">WhatsApp Us</a>
+      <a href="tel:+919920053379" class="ep-call-btn">Call Now</a>
     </div>
   </div>
 
