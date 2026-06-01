@@ -397,6 +397,33 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
   .benefit-strip > div{ border-right:none; border-bottom:1px solid rgba(212,162,76,.18); padding-bottom:16px; }
   .review-card{ width:280px; }
 }
+.benefit-arrow{
+  display:none !important;
+}
+
+.benefit-item{
+  grid-template-columns:90px 1fr !important;
+  cursor:default;
+}
+
+.benefit-item:hover,
+.benefit-item.active{
+  transform:none !important;
+  box-shadow:none !important;
+}
+
+.benefit-item:hover::before,
+.benefit-item.active::before{
+  transform:scaleY(0) !important;
+}
+
+.benefit-video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transform:scale(1.02);
+}
 </style>
 </head>
 <body>
@@ -525,7 +552,9 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
     </div>
     <div class="benefits-right">
       <div class="benefit-image-wrap">
-        <img id="benefitImage" src="cinematic_caravan.gif" alt="Luxury Caravan Experience">
+        <video class="benefit-video" autoplay muted loop playsinline preload="auto">
+  <source src="why-caravan.mp4" type="video/mp4">
+</video>
         <div class="elite-badge">
           <img src="logo.png" alt="Elite">
           <span>Elite Caravan Collection</span>
@@ -798,21 +827,7 @@ if(processSection && processCursor){
   });
 }
 
-const benefitItems = document.querySelectorAll(".benefit-item");
-const benefitImage = document.getElementById("benefitImage");
-benefitItems.forEach((item)=>{
-  item.addEventListener("mouseenter", ()=>{
-    benefitItems.forEach((el)=>el.classList.remove("active"));
-    item.classList.add("active");
-    const newImg = item.getAttribute("data-img");
-    benefitImage.style.opacity = "0";
-    setTimeout(()=>{
-      benefitImage.src = newImg;
-      benefitImage.style.opacity = "1";
-      benefitImage.style.transform = "scale(1.08)";
-    },220);
-  });
-});
+
 
 const benefitsSection = document.querySelector(".benefits-section");
 const benefitCursor = document.getElementById("benefitCursor");
