@@ -424,6 +424,184 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
   display:block;
   transform:scale(1.02);
 }
+
+/* gallery */
+.travel-gallery{
+  position:relative;
+  min-height:100vh;
+  padding:95px 5vw 90px;
+  background:#f7f4ef;
+  color:#080808;
+  overflow:hidden;
+}
+
+.gallery-head{
+  text-align:center;
+  position:relative;
+  z-index:3;
+}
+
+.gallery-head span{
+  color:#d4a24c;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+}
+
+.gallery-head h2{
+  margin-top:18px;
+  font-family:var(--font-display);
+  font-size:clamp(48px,6vw,92px);
+  line-height:.92;
+  letter-spacing:-.04em;
+}
+
+.gallery-tabs{
+  margin-top:28px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+}
+
+.gallery-tabs button{
+  padding:11px 28px;
+  border:1px solid rgba(8,8,8,.25);
+  border-radius:999px;
+  background:transparent;
+  color:#080808;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.gallery-tabs button.active{
+  background:#080808;
+  color:#fff;
+}
+
+.gallery-stage{
+  max-width:1450px;
+  margin:60px auto 0;
+  display:flex;
+  gap:22px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding:35px 5vw 50px;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+}
+
+.gallery-stage::-webkit-scrollbar{
+  height:8px;
+}
+
+.gallery-stage::-webkit-scrollbar-track{
+  background:rgba(0,0,0,.08);
+  border-radius:999px;
+}
+
+.gallery-stage::-webkit-scrollbar-thumb{
+  background:#d4a24c;
+  border-radius:999px;
+}
+
+.gallery-card{
+  flex:0 0 430px;
+  height:270px;
+  border-radius:24px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 28px 70px rgba(0,0,0,.16);
+  border:1px solid rgba(0,0,0,.08);
+  scroll-snap-align:center;
+  opacity:0;
+  transform:translateY(35px) scale(.94);
+  transition:.8s cubic-bezier(.19,1,.22,1);
+}
+
+.gallery-card.show-card{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+.gallery-card img{
+  width:100%;
+  height:100%;
+  background:#fff;
+  transition:.5s ease;
+}
+
+.gallery-card img.interior-img{
+  object-fit:cover;
+}
+
+.gallery-card img.exterior-img{
+  object-fit:contain;
+  padding:8px;
+}
+
+.gallery-card:hover img{
+  transform:scale(1.04);
+}
+
+.gallery-card.main{
+  width:520px;
+  height:315px;
+  z-index:5;
+}
+
+.travel-gallery.show .g1{ transform:translateX(-430px) scale(.82); opacity:.65; z-index:1; }
+.travel-gallery.show .g2{ transform:translateX(-240px) scale(.9); opacity:.85; z-index:2; }
+.travel-gallery.show .g3{ transform:translateX(0) scale(1); opacity:1; z-index:5; }
+.travel-gallery.show .g4{ transform:translateX(240px) scale(.9); opacity:.85; z-index:2; }
+.travel-gallery.show .g5{ transform:translateX(430px) scale(.82); opacity:.65; z-index:1; }
+
+.gallery-nav{
+  margin-top:38px;
+  display:flex;
+  justify-content:center;
+  gap:14px;
+}
+
+.gallery-nav button{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:1px solid rgba(8,8,8,.35);
+  background:#fff;
+  color:#080808;
+  font-size:18px;
+  cursor:pointer;
+  transition:.35s ease;
+}
+
+.gallery-nav button:hover{
+  background:#d4a24c;
+  border-color:#d4a24c;
+}
+.gallery-card img{
+  transition:opacity .35s ease, transform 1s ease;
+}
+
+@media(max-width:900px){
+  .gallery-stage{
+    height:auto;
+    display:grid;
+    gap:18px;
+  }
+
+  .gallery-card,
+  .gallery-card.main{
+    position:relative;
+    width:100%;
+    height:340px;
+    transform:none !important;
+    opacity:1 !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -481,6 +659,43 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
     </div>
   </div>
 
+</section>
+
+<!-- Gallery -->
+ <section class="travel-gallery" id="gallery">
+  <div class="gallery-head">
+    <span>◆ Caravan Gallery</span>
+    <h2>Interior & Exterior</h2>
+
+    <div class="gallery-tabs">
+      <button class="active">Interior</button>
+      <button>Exterior</button>
+    </div>
+  </div>
+
+  <div class="gallery-stage" id="galleryStage">
+    <div class="gallery-card g1">
+      <img src="i.jpeg" alt="">
+    </div>
+
+    <div class="gallery-card g2">
+      <img src="i1.jpeg" alt="">
+    </div>
+
+    <div class="gallery-card g3 main">
+      <img src="i3.jpeg" alt="">
+    </div>
+
+    <div class="gallery-card g4">
+      <img src="i5.jpeg" alt="">
+    </div>
+
+    <div class="gallery-card g5">
+      <img src="i6.jpeg" alt="">
+    </div>
+  </div>
+
+  
 </section>
 
 <!-- PROCESS -->
@@ -859,6 +1074,67 @@ if(navbar){
     lastScrollY = Math.max(currentScrollY, 0);
   }, { passive:true });
 }
+
+const gallerySection = document.querySelector(".travel-gallery");
+
+if(gallerySection){
+  const galleryObserver = new IntersectionObserver((entries)=>{
+    entries.forEach((entry)=>{
+      if(entry.isIntersecting){
+        gallerySection.classList.add("show");
+      }
+    });
+  },{ threshold:.35 });
+
+  galleryObserver.observe(gallerySection);
+}
+const galleryTabs = document.querySelectorAll(".gallery-tabs button");
+const galleryStage = document.getElementById("galleryStage");
+
+const interiorImgs = [
+  "i.jpeg","i1.jpeg","i3.jpeg","i4.jpeg","i5.jpeg","i6.jpeg","i7.jpeg","i8.jpeg",
+  "i9.jpeg","i10.jpeg","i11.jpeg","i12.jpeg","i13.jpeg","i14.jpeg","i15.jpeg","i16.jpeg","i17.jpeg"
+];
+
+const exteriorImgs = [
+  "e.png","e1.png","e2.png","e3.png","e4.png","e5.png","e6.png","e7.png"
+];
+
+function buildGallery(images, type){
+  galleryStage.innerHTML = "";
+
+  images.forEach((src, index)=>{
+    const card = document.createElement("div");
+    card.className = `gallery-card ${type === "interior" ? "interior-card" : "exterior-card"}`;
+
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "";
+    img.className = type === "interior" ? "interior-img" : "exterior-img";
+
+    card.appendChild(img);
+    galleryStage.appendChild(card);
+
+    setTimeout(()=>{
+      card.classList.add("show-card");
+    }, index * 70);
+  });
+}
+
+galleryTabs.forEach((tab, index)=>{
+  tab.addEventListener("click", ()=>{
+    galleryTabs.forEach(btn => btn.classList.remove("active"));
+    tab.classList.add("active");
+
+    if(index === 0){
+      buildGallery(interiorImgs, "interior");
+    }else{
+      buildGallery(exteriorImgs, "exterior");
+    }
+  });
+});
+
+buildGallery(interiorImgs, "interior");
 </script>
 </body>
 </html>
