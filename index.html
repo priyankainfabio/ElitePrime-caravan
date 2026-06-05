@@ -77,13 +77,98 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
 
   pointer-events:none;
 }
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:42px;
+  margin-left:auto;
+  margin-right:28px;
+}
+
 .nav-links a{
-  color:rgba(255,255,255,0.88);
-  transition:.3s ease;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+
+  color:rgba(255,255,255,.82);
+  text-decoration:none;
+
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+
+  transition:.35s ease;
+}
+
+.nav-icon{
+  width:38px;
+  height:38px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  color:#f5c84f;
+
+  background:
+    radial-gradient(circle at top,
+    rgba(245,200,79,.18),
+    rgba(255,255,255,.03));
+
+  border:1px solid rgba(245,200,79,.14);
+
+  transition:.35s ease;
+
+  box-shadow:
+    0 0 0 rgba(245,200,79,0),
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.nav-links a:hover .nav-icon{
+  transform:translateY(-4px) scale(1.08);
+
+  background:
+    radial-gradient(circle at top,
+    rgba(245,200,79,.28),
+    rgba(255,255,255,.06));
+
+  box-shadow:
+    0 0 25px rgba(245,200,79,.18);
+}
+
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-10px;
+
+  width:0%;
+  height:1px;
+
+  background:#d4a24c;
+
+  transform:translateX(-50%);
+  transition:.4s cubic-bezier(.19,1,.22,1);
 }
 
 .nav-links a:hover{
-  color:#f5c96a;
+  color:#fff;
+  transform:translateY(-2px);
+}
+
+.nav-links a:hover .nav-icon{
+  transform:translateY(-4px) scale(1.12);
+
+  filter:drop-shadow(0 0 18px rgba(245,200,79,.55));
+}
+
+.nav-links a:hover::after{
+  width:100%;
 }
 .book-btn{
   margin-left:auto;
@@ -608,6 +693,38 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
 
 <nav class="nav">
   <img src="logo.png" class="logo" alt="Elite Prime Cars">
+  <div class="nav-links">
+
+  <a href="#benefits">
+  <span class="nav-icon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <path d="M12 3L14.8 8.2L20.5 9L16.2 13.1L17.3 18.8L12 16L6.7 18.8L7.8 13.1L3.5 9L9.2 8.2L12 3Z"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linejoin="round"/>
+    </svg>
+  </span>
+  <span>Why Caravan</span>
+</a>
+
+<a href="#gallery">
+  <span class="nav-icon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <rect x="4" y="5" width="16" height="14" rx="2"
+      stroke="currentColor"
+      stroke-width="1.7"/>
+      <circle cx="9" cy="10" r="1.5" fill="currentColor"/>
+      <path d="M20 16L15 11L8 18"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"/>
+    </svg>
+  </span>
+  <span>Gallery</span>
+</a>
+
+</div>
   <a href="#footer" class="book-btn">Book Journey</a>
 </nav>
 
@@ -623,9 +740,7 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
 
   <div class="chapter">
     <div class="chapter-img">
-      <video autoplay muted loop playsinline preload="auto">
-        <source src="day.mp4" type="video/mp4">
-      </video>
+      <img src="i3.jpeg" alt="">
     </div>
     <div class="chapter-copy">
       <div class="chapter-num">01</div>
@@ -637,7 +752,7 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
 
   <div class="chapter">
     <div class="chapter-img">
-      <img src="caravan.png" alt="">
+      <img src="i11.jpeg" alt="">
     </div>
     <div class="chapter-copy">
       <div class="chapter-num">02</div>
@@ -668,8 +783,8 @@ p,a,button,.book-btn,.btn,.final-btn,.lp-btn{ font-family:var(--font-body); }
     <h2>Interior & Exterior</h2>
 
     <div class="gallery-tabs">
-      <button class="active">Interior</button>
-      <button>Exterior</button>
+      <button class="active">Inside The Experience</button>
+      <button>Outside The Journey</button>
     </div>
   </div>
 
